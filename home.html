@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div style="background-image: url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80'); background-size: cover; background-position: center; min-height: 100vh; padding-top: 60px;">
+
+    <div style="max-width: 700px; margin: 0 auto; padding: 30px; background: rgba(193,156,121,0.95); border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.2); text-align: center;">
+      <h1 style="font-size: 2.2em; color: #333;">Welcome to Halu Foods 🍽️</h1>
+      <p style="font-size: 1.1em; color: #666; margin-top: 15px;">
+        Discover and manage your favorite recipes easily.
+      </p>
+
+      {% if not user.is_authenticated %}
+        <div style="margin-top: 30px;">
+          <a href="{% url 'login' %}" style="padding: 10px 20px; background-color: #31aebf; color: white; border-radius: 6px; text-decoration: none; margin-right: 10px;">Login</a>
+          <a href="{% url 'signup' %}" style="padding: 10px 20px; background-color: #e86028; color: white; border-radius: 6px; text-decoration: none;">Sign Up</a>
+        </div>
+      {% else %}
+        <div style="margin-top: 30px;">
+          <a href="{% url 'recipe_list' %}" style="padding: 10px 20px; background-color: #FF9800; color: white; border-radius: 6px; text-decoration: none;">View Recipes</a>
+        </div>
+      {% endif %}
+    </div>
+
+  </div>
+{% endblock %}

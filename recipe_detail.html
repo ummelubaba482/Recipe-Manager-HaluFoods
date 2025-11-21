@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(to right, #fff7e6, #ffe6e6);
+    margin: 0;
+    padding: 0;
+  }
+
+  .container {
+    max-width: 800px;
+    margin: 40px auto;
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    border: 2px solid #ffcc99;
+  }
+
+  h2 {
+    font-family: 'Georgia', serif;
+    font-size: 2.4em;
+    margin-bottom: 20px;
+    color: #e67e22;
+    text-align: center;
+    position: relative;
+  }
+
+  .recipe-image {
+    display: block;
+    margin: 0 auto 25px;
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  }
+
+  .section {
+    margin-bottom: 25px;
+    padding: 15px;
+    background: #fff5e6;
+    border-left: 5px solid #ffa94d;
+    border-radius: 6px;
+  }
+
+  .section strong {
+    display: block;
+    font-size: 1.2em;
+    margin-bottom: 8px;
+    color: #d35400;
+  }
+
+  .section p {
+    background: #fffaf0;
+    padding: 12px;
+    border-radius: 6px;
+    color: #333;
+    white-space: pre-wrap;
+    line-height: 1.6;
+  }
+
+  .edit-button {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #e67e22;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: background 0.3s ease;
+    text-align: center;
+  }
+
+  .edit-button:hover {
+    background-color: #d35400;
+  }
+</style>
+
+<div class="container">
+  <h2>{{ recipe.title }}</h2>
+
+  {% if recipe.image %}
+    <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}" class="recipe-image">
+  {% else %}
+    <img src="https://via.placeholder.com/600x300.png?text=No+Image+Available" class="recipe-image" alt="No Image">
+  {% endif %}
+
+  <div class="section">
+    <strong>Description:</strong>
+    <p>{{ recipe.description }}</p>
+  </div>
+
+  <div class="section">
+    <strong>Ingredients:</strong>
+    <p>{{ recipe.ingredients }}</p>
+  </div>
+
+  <div class="section">
+    <strong>Instructions:</strong>
+    <p>{{ recipe.instructions }}</p>
+  </div>
+
+  {% if user.is_staff %}
+    <a href="{% url 'recipe_edit' recipe.pk %}" class="edit-button">✏️ Edit Recipe</a>
+  {% endif %}
+</div>
+{% endblock %}

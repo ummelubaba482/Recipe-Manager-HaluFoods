@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div style="max-width: 1000px; margin: 40px auto; padding: 20px; background-color: #ffffff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);">
+  <h2 style="font-size: 24px; font-weight: bold; margin-bottom: 20px; color: #333;">All Recipes</h2>
+
+
+  <form method="GET" action="{% url 'recipe_list' %}" style="margin-bottom: 20px; display: flex; justify-content: center;">
+  <input
+    type="text"
+    name="q"
+    placeholder="Search recipes..."
+    value="{{ request.GET.q }}"
+    style="padding: 8px 12px; width: 300px; border: 1px solid #ccc; border-radius: 4px 0 0 4px; outline: none;"
+  />
+  <button
+    type="submit"
+    style="padding: 8px 16px; background-color: #007bff; color: white; border: none; border-radius: 0 4px 4px 0; cursor: pointer;">
+    Search
+  </button>
+</form>
+
+
+
+
+  <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px;">
+    {% for recipe in recipes %}
+      <div style="background: #f9f9f9; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.1);">
+        <a href="{% url 'recipe_detail' recipe.pk %}" style="text-decoration: none; color: inherit;">
+          {% if recipe.image %}
+            <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}" style="width: 100%; height: 160px; object-fit: cover;">
+          {% endif %}
+          <div style="padding: 12px;">
+            <h3 style="font-size: 18px; margin: 0 0 8px;">{{ recipe.title }}</h3>
+          </div>
+        </a>
+      </div>
+    {% endfor %}
+  </div>
+
+  {% if user.is_staff %}
+    <div style="margin-top: 30px; text-align: right;">
+      <a href="{% url 'recipe_create' %}" style="display: inline-block; background-color: #28a745; color: white; padding: 10px 16px; border-radius: 5px; text-decoration: none;">
+        + Add Recipe
+      </a>
+    </div>
+  {% endif %}
+</div>
+{% endblock %}
